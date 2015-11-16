@@ -135,7 +135,7 @@ class AdvisingForm extends CI_Controller
                 {
                     if (!empty($value[0]->getCourse()->getAllCurriculumCourseSlots()))
                     {
-                        $min_grade = $value[0]->getCourse()->getAllCurriculumCourseSlots()[0]->getMinimumGrade();
+                        $min_grade = $value[0]->getCourse()->getAllCurriculumCourseSlots[0]->getMinimumGrade();
                         switch($min_grade)
                         {
                             case 4:

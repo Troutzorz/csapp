@@ -685,7 +685,7 @@ class User_model extends CI_Model
 		
 		if($results->num_rows() > 0)
 		{
-			return $results->row_array()["Grade"];
+			return $results->row_array["Grade"];
 		}
 		else
 		{

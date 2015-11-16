@@ -646,10 +646,10 @@ class Checklistexport extends CI_Controller
 				$sheet->getCell("$nameCol$row")->setValue($cc->getName());
 				$sheet->getCell("$titleCol$row")->setvalue($cc->getNotes());
 				$credit = '?';
-				if (isset($cc->getValidCourseIDs()[0]))
+				if (isset($cc->getValidCourseIDs[0]))
 				{
 					$temp = new Course_Section_Model();
-					$temp->loadPropertiesFromPrimaryKey($cc->getValidCourseIDs()[0]);
+					$temp->loadPropertiesFromPrimaryKey($cc->getValidCourseIDs[0]);
 					$credit = $temp->getHours();
 				}
 				$sheet->getStyle("$creditCol$row")->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);

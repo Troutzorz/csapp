@@ -18,8 +18,10 @@ class User extends CI_Controller {
      */
     public function index($action = NULL, $userID = NULL) {
         $this->checkSec(); //Performs security check
-
+        $user = new User_model;
+        $userExists = $user->loadPropertiesFromPrimaryKey($_SESSION['UserID']);
         $data = array(
+            'user' => $user,
             'allUsers' => $this->User_model->getAllUsers(20000, 0)
         );
 
@@ -39,8 +41,6 @@ class User extends CI_Controller {
         //At this point we have a valid action saved in the session,
         //and if the action is modify/remove there is some userID provided.
         // Need to see if userID can be related to an actual users.
-        $user = new User_model;
-        $userExists = $user->loadPropertiesFromPrimaryKey($userID);
         //Error attempting to create with an existing user.
         if ($action == 'create' && $userExists) {
             $_SESSION['userActionMsg'] = 'Cannot create user with existing ID.';
