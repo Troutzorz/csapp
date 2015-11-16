@@ -608,14 +608,14 @@ class User_model extends CI_Model
     public function addCourseSection($courseSection, $grade)
     {
         $data = array(
-			"StudentUserID" => $this->userID,
-			"CourseSectionID" => $courseSection->getCourseSectionID(),
-			"Grade" => $grade
+                "StudentUserID" => $this->userID,
+                "CourseSectionID" => $courseSection->getCourseSectionID(),
+                "Grade" => $grade
 		);
 		
-		$this->db->insert("StudentCourseSections", $data);
-		
-		return $this->db->affected_rows() > 0;
+        $this->db->insert("StudentCourseSections", $data);
+
+        return $this->db->affected_rows() > 0;
     }
     
     /**
@@ -628,11 +628,11 @@ class User_model extends CI_Model
     public function removeCourseSection($courseSection)
     {
         $this->db->where('CourseSectionID', $courseSection->getCourseSectionID());
-		$this->db->where('StudentUserID', $this->userID);
-		
-		$this->db->delete('StudentCourseSections');
-		
-		return $this->db->affected_rows() > 0;
+        $this->db->where('StudentUserID', $this->userID);
+
+        $this->db->delete('StudentCourseSections');
+
+        return $this->db->affected_rows() > 0;
     }
     
     /**
@@ -643,90 +643,90 @@ class User_model extends CI_Model
      */
     public function getAllCoursesTaken()
     {
-		$models = array();
-		
-		$this->db->select('CourseSectionID, Grade');
-		$this->db->from('StudentCourseSections');
+        $models = array();
+
+        $this->db->select('CourseSectionID, Grade');
+        $this->db->from('StudentCourseSections');
         $this->db->where('StudentUserID', $this->userID);
-		
-		$results = $this->db->get();
-		
-		if($results->num_rows() > 0)
-		{
-			foreach($results->result_array() as $row)
-			{
-				$courseSection = new Course_section_model;
-				
-				if($courseSection->loadPropertiesFromPrimaryKey($row['CourseSectionID']))
-				{
-					array_push($models, array($courseSection, $row['Grade']));
-				}
-			}
-		}
-		
-		return $models;
+
+        $results = $this->db->get();
+
+        if($results->num_rows() > 0)
+        {
+            foreach($results->result_array() as $row)
+            {
+                $courseSection = new Course_section_model;
+
+                if($courseSection->loadPropertiesFromPrimaryKey($row['CourseSectionID']))
+                {
+                    array_push($models, array($courseSection, $row['Grade']));
+                }
+            }
+        }
+
+        return $models;
     }
-	
-	/**
-	 * Summary of getGradeForCourseSection
-	 * Get the grade the student user model got for a particular course section
-	 *
-	 * @param Course_section_model The course section model to look up a grade for
-	 * @return string Returns the grade a student got for that course section or false if no grade was found
-	 */
-	public function getGradeForCourseSection($courseSection)
-	{
-		$this->db->select('Grade');
-		$this->db->from('StudentCourseSections');
-		$this->db->where('StudentUserID', $this->userID);
-		$this->db->where('CourseSectionID', $courseSection->getCourseSectionID());
-		
-		$results = $this->db->get();
-		
-		if($results->num_rows() > 0)
-		{
-			return $results->row_array["Grade"];
-		}
-		else
-		{
-			return false;
-		}
-	}
-	
-	/**
-	 * Summary of getAllTransferCourses
-	 * Get all of the student transfer course models associated with this user
-	 *
-	 * @return Array An array containing all the student transfer course models associated with this user model
-	 */
-	public function getAllTransferCourses()
-	{
-		$models = array();
-		
-		if($this->userID != null)
-		{
-			$this->db->select('StudentTransferCourseID');
-			$this->db->from('StudentTransferCourses');
-			$this->db->where('StudentUserID', $this->userID);
-			
-			$results = $this->db->get();
-			
-			if($results->num_rows() > 0)
-			{
-				foreach($results->result_array() as $row)
-				{
-					$model = new Student_transfer_course_model;
-					
-					if($model->loadPropertiesFromPrimaryKey($row['StudentTransferCourseID']))
-					{
-						array_push($models, $model);
-					}
-				}
-			}
-		}
-		
-		return $models;
-	}
+
+    /**
+     * Summary of getGradeForCourseSection
+     * Get the grade the student user model got for a particular course section
+     *
+     * @param Course_section_model The course section model to look up a grade for
+     * @return string Returns the grade a student got for that course section or false if no grade was found
+     */
+    public function getGradeForCourseSection($courseSection)
+    {
+        $this->db->select('Grade');
+        $this->db->from('StudentCourseSections');
+        $this->db->where('StudentUserID', $this->userID);
+        $this->db->where('CourseSectionID', $courseSection->getCourseSectionID());
+
+        $results = $this->db->get();
+
+        if($results->num_rows() > 0)
+        {
+            return $results->row_array["Grade"];
+        }
+        else
+        {
+            return false;
+        }
+    }
+
+    /**
+     * Summary of getAllTransferCourses
+     * Get all of the student transfer course models associated with this user
+     *
+     * @return Array An array containing all the student transfer course models associated with this user model
+     */
+    public function getAllTransferCourses()
+    {
+        $models = array();
+
+        if($this->userID != null)
+        {
+            $this->db->select('StudentTransferCourseID');
+            $this->db->from('StudentTransferCourses');
+            $this->db->where('StudentUserID', $this->userID);
+
+            $results = $this->db->get();
+
+            if($results->num_rows() > 0)
+            {
+                foreach($results->result_array() as $row)
+                {
+                    $model = new Student_transfer_course_model;
+
+                    if($model->loadPropertiesFromPrimaryKey($row['StudentTransferCourseID']))
+                    {
+                        array_push($models, $model);
+                    }
+                }
+            }
+        }
+
+        return $models;
+    }
 	
     /**
      * Summary of update
@@ -739,11 +739,11 @@ class User_model extends CI_Model
         if($this->userID != null && filter_var($this->emailAddress, FILTER_VALIDATE_EMAIL) && filter_var($this->userStateID, FILTER_VALIDATE_INT))
         {
             $data = array(
-				'EmailAddress' => $this->emailAddress, 
-				'PasswordHash' => $this->passwordSalt . "$" . $this->passwordHash, 
-				'Name' => $this->name, 
-				'LastLogin' => $this->lastLogin,
-				'UserStateID' => $this->userStateID
+                        'EmailAddress' => $this->emailAddress, 
+                        'PasswordHash' => $this->passwordSalt . "$" . $this->passwordHash, 
+                        'Name' => $this->name, 
+                        'LastLogin' => $this->lastLogin,
+                        'UserStateID' => $this->userStateID
 			);
             
             $this->db->where('UserID', $this->userID);
@@ -768,31 +768,31 @@ class User_model extends CI_Model
     {   
         if(filter_var($this->emailAddress, FILTER_VALIDATE_EMAIL) && filter_var($this->userStateID, FILTER_VALIDATE_INT))
         {
-			if($this->userID != null)
-			{
-				$data = array(
-					'UserID' => $this->userID,
-					'EmailAddress' => $this->emailAddress, 
-					'PasswordHash' => $this->passwordSalt . "$" . $this->passwordHash, 
-					'Name' => $this->name, 
-					'LastLogin' => $this->lastLogin,
-					'UserStateID' => $this->userStateID
-				);
-			}	
-			else
-			{
-				$data = array(
-					'EmailAddress' => $this->emailAddress, 
-					'PasswordHash' => $this->passwordSalt . "$" . $this->passwordHash, 
-					'Name' => $this->name, 
-					'LastLogin' => $this->lastLogin,
-					'UserStateID' => $this->userStateID
-				);
-			}
-            
+            if($this->userID != null)
+            {
+                $data = array(
+                    'UserID' => $this->userID,
+                    'EmailAddress' => $this->emailAddress, 
+                    'PasswordHash' => $this->passwordSalt . "$" . $this->passwordHash, 
+                    'Name' => $this->name, 
+                    'LastLogin' => $this->lastLogin,
+                    'UserStateID' => $this->userStateID
+                );
+            }	
+            else
+            {
+                $data = array(
+                    'EmailAddress' => $this->emailAddress, 
+                    'PasswordHash' => $this->passwordSalt . "$" . $this->passwordHash, 
+                    'Name' => $this->name, 
+                    'LastLogin' => $this->lastLogin,
+                    'UserStateID' => $this->userStateID
+                );
+            }
+
             $this->db->insert('Users', $data);
-            
-			$this->userID = $this->db->insert_id();
+
+            $this->userID = $this->db->insert_id();
 			
             return $this->db->affected_rows() > 0;
         }
@@ -812,9 +812,9 @@ class User_model extends CI_Model
             $this->db->where('UserID', $this->userID);
             $this->db->delete('UserRoles');
             
-			$this->db->where('StudentUserID', $this->userID);
-			$this->db->or_where('AdvisorUsrID', $this->userID);
-			$this->db->delete('AdvisingLogEntries');
+            $this->db->where('StudentUserID', $this->userID);
+            $this->db->or_where('AdvisorUsrID', $this->userID);
+            $this->db->delete('AdvisingLogEntries');
 			
             $this->db->where('StudentUserID', $this->userID);
             $this->db->delete('StudentCourseSections');
@@ -853,12 +853,12 @@ class User_model extends CI_Model
         
         $finalFlag = true;
 		
-		$len2 = strlen($this->passwordHash);
-		
-		if($len < 1 || $len2 != $len)
-		{
-			$finalFlag = false;
-		}
+        $len2 = strlen($this->passwordHash);
+
+        if($len < 1 || $len2 != $len)
+        {
+                $finalFlag = false;
+        }
 		
         for($i=0;$i<$len;$i++)
         {
@@ -871,153 +871,153 @@ class User_model extends CI_Model
         return $finalFlag;
     }
 	
-	/**
-	 * Summary of getAllStudents
-	 * Get all of the users in the database with a student role
-	 *
-	 * @return Array An array containing all users who have a student role
-	 */
-	public static function getAllStudents()
-	{
-		$db = get_instance()->db;
-		
-		$db->select('Users.UserID');
-		$db->from('Users');
-		$db->join('UserRoles', 'Users.UserID = UserRoles.UserID', 'inner');
-		$db->where('UserRoles.RoleID', self::ROLE_STUDENT);
-		
-		$results = $db->get();
-		
-		$models = array();
-		
-		if($results->num_rows() > 0)
-		{
-			foreach($results->result_array() as $row)
-			{
-				$model = new User_model;
-				
-				if($model->loadPropertiesFromPrimaryKey($row['UserID']))
-				{
-					array_push($models, $model);
-				}
-			}
-		}
-		
-		return $models;
-	}
+    /**
+     * Summary of getAllStudents
+     * Get all of the users in the database with a student role
+     *
+     * @return Array An array containing all users who have a student role
+     */
+    public static function getAllStudents()
+    {
+        $db = get_instance()->db;
+
+        $db->select('Users.UserID');
+        $db->from('Users');
+        $db->join('UserRoles', 'Users.UserID = UserRoles.UserID', 'inner');
+        $db->where('UserRoles.RoleID', self::ROLE_STUDENT);
+
+        $results = $db->get();
+
+        $models = array();
+
+        if($results->num_rows() > 0)
+        {
+                foreach($results->result_array() as $row)
+                {
+                        $model = new User_model;
+
+                        if($model->loadPropertiesFromPrimaryKey($row['UserID']))
+                        {
+                                array_push($models, $model);
+                        }
+                }
+        }
+
+        return $models;
+    }
 	
-	/**
-	 * Summary of getAllUsers
-	 * Get all of the users in the database
-	 *
-	 * @param int $limit The maximum number of users to return
-	 * @param int $offset The starting index to begin finding users
-	 * @return Array An array containing all users
-	 */
-	public static function getAllUsers($limit = 0, $offset = 0)
-	{
-		$db = get_instance()->db;
-		
-		$db->select('UserID');
-		
-		if($offset > 0 && $limit > 0)
-		{
-			$results = $db->get('Users', $limit, $offset);
-		}
-		else if($limit > 0)
-		{
-			$results = $db->get('Users', $limit);
-		}
-		else
-		{
-			$results = $db->get('Users');
-		}
-		
-		$models = array();
-		
-		if($results->num_rows() > 0)
-		{
-			foreach($results->result_array() as $row)
-			{
-				$model = new User_model;
-				
-				if($model->loadPropertiesFromPrimaryKey($row['UserID']))
-				{
-					array_push($models, $model);
-				}
-			}
-		}
-		
-		return $models;
-	}
-	
-	/**
-	 * Summary of getAllAdvisors
-	 * Get all of the users in the database with an advising role
-	 *
-	 * @return Array An array containing all users who have an advisor role
-	 */
-	public static function getAllAdvisors()
-	{
-		$db = get_instance()->db;
-		
-		$models = array();
-		
-		$db->select('Users.UserID');
-		$db->from('Users');
-		$db->join('UserRoles', 'Users.UserID = UserRoles.UserID', 'inner');
-		$db->where('UserRoles.RoleID', self::ROLE_ADVISOR);
-		
-		$results = $db->get();
-		
-		if($results->num_rows() > 0)
-		{
-			foreach($results->result_array() as $row)
-			{
-				$model = new User_model;
-				
-				if($model->loadPropertiesFromPrimaryKey($row['UserID']))
-				{
-					array_push($models, $model);
-				}
-			}
-		}
-		
-		return $models;
-	}
-	
-	/**
-	 * Summary of getAllProgramChairs
-	 * Get all of the users in the database with a program chair role
-	 *
-	 * @return Array An array containing all users who have a program chair role
-	 */
-	public static function getAllProgramChairs()
-	{
-		$db = get_instance()->db;
-		
-		$models = array();
-		
-		$db->select('Users.UserID');
-		$db->from('Users');
-		$db->join('UserRoles', 'Users.UserID = UserRoles.UserID', 'inner');
-		$db->where('UserRoles.RoleID', self::ROLE_PROGRAM_CHAIR);
-		
-		$results = $db->get();
-		
-		if($results->num_rows() > 0)
-		{
-			foreach($results->result_array() as $row)
-			{
-				$model = new User_model;
-				
-				if($model->loadPropertiesFromPrimaryKey($row['UserID']))
-				{
-					array_push($models, $model);
-				}
-			}
-		}
-		
-		return $models;
-	}
+    /**
+     * Summary of getAllUsers
+     * Get all of the users in the database
+     *
+     * @param int $limit The maximum number of users to return
+     * @param int $offset The starting index to begin finding users
+     * @return Array An array containing all users
+     */
+    public static function getAllUsers($limit = 0, $offset = 0)
+    {
+            $db = get_instance()->db;
+
+            $db->select('UserID');
+
+            if($offset > 0 && $limit > 0)
+            {
+                    $results = $db->get('Users', $limit, $offset);
+            }
+            else if($limit > 0)
+            {
+                    $results = $db->get('Users', $limit);
+            }
+            else
+            {
+                    $results = $db->get('Users');
+            }
+
+            $models = array();
+
+            if($results->num_rows() > 0)
+            {
+                    foreach($results->result_array() as $row)
+                    {
+                            $model = new User_model;
+
+                            if($model->loadPropertiesFromPrimaryKey($row['UserID']))
+                            {
+                                    array_push($models, $model);
+                            }
+                    }
+            }
+
+            return $models;
+    }
+
+    /**
+     * Summary of getAllAdvisors
+     * Get all of the users in the database with an advising role
+     *
+     * @return Array An array containing all users who have an advisor role
+     */
+    public static function getAllAdvisors()
+    {
+            $db = get_instance()->db;
+
+            $models = array();
+
+            $db->select('Users.UserID');
+            $db->from('Users');
+            $db->join('UserRoles', 'Users.UserID = UserRoles.UserID', 'inner');
+            $db->where('UserRoles.RoleID', self::ROLE_ADVISOR);
+
+            $results = $db->get();
+
+            if($results->num_rows() > 0)
+            {
+                    foreach($results->result_array() as $row)
+                    {
+                            $model = new User_model;
+
+                            if($model->loadPropertiesFromPrimaryKey($row['UserID']))
+                            {
+                                    array_push($models, $model);
+                            }
+                    }
+            }
+
+            return $models;
+    }
+
+    /**
+     * Summary of getAllProgramChairs
+     * Get all of the users in the database with a program chair role
+     *
+     * @return Array An array containing all users who have a program chair role
+     */
+    public static function getAllProgramChairs()
+    {
+            $db = get_instance()->db;
+
+            $models = array();
+
+            $db->select('Users.UserID');
+            $db->from('Users');
+            $db->join('UserRoles', 'Users.UserID = UserRoles.UserID', 'inner');
+            $db->where('UserRoles.RoleID', self::ROLE_PROGRAM_CHAIR);
+
+            $results = $db->get();
+
+            if($results->num_rows() > 0)
+            {
+                    foreach($results->result_array() as $row)
+                    {
+                            $model = new User_model;
+
+                            if($model->loadPropertiesFromPrimaryKey($row['UserID']))
+                            {
+                                    array_push($models, $model);
+                            }
+                    }
+            }
+
+            return $models;
+    }
 }

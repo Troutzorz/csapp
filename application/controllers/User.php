@@ -193,7 +193,7 @@ class User extends CI_Controller {
         }
         $user->setName($uName);
         //todo Ensure Name is set here
-        if (isset($data['pass']) && $data['pass'] == $data['confPass']) {
+        if (isset($data['pass']) && $data['pass'] == $data['confPass'] && $data['pass'] != '') {
             $user->setPassword($data['pass']);
         }
         $this->addUserRoles($data, $user);
