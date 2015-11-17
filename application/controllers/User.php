@@ -602,4 +602,11 @@ class User extends CI_Controller {
         redirect('User/prepareAddCourses/' . $sID);
     }
 
+    public function resetTimestamp ($id)
+    {
+        $this->checkSec();
+        $u = new User_model;
+        $u->loadPropertiesFromPrimaryKey($id);
+        $u->setLastLogin(0);
+    }
 }

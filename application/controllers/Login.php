@@ -25,7 +25,8 @@ class Login extends CI_Controller {
                 //If password is correct
                 if ($user->authenticate($password))
                 {
-                    if (null !== $user->getLastLogin()&&0<$user->getLastLogin()&&$user->getLastLogin()+10368000<time())
+                    $LL = $user->getLastLogin();
+                    if (null !== $LL && 0<$LL && $LL+10368000<time() && !$user->isAdmin())
                     {
                         $advisor = $user->getAdvisor();
                         $this->load->view('login', array("error2"=>TRUE, 'advisorname'=>$advisor->getName(), 'advisoremail'=>$advisor->getEmailAddress()));

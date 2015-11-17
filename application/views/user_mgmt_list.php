@@ -5,12 +5,14 @@ To change this template file, choose Tools | Templates
 and open the template in the editor.
 -->
 
-<html>
+<html lang="en">
     <head>
-        <meta charset="utf-8">
-        <link rel="icon" href="<?php echo IMG . '/icon.ico'; ?>">
-        <link rel="stylesheet" href="<?php echo CSS . '/magic-bootstrapV2_1.css'; ?>" type="text/css">
         <title>User Management List</title>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="icon" href="<?php echo IMG.'/icon.ico'; ?>">
+        <link rel="stylesheet" href="<?php echo CSS . '/magic-bootstrapV2_1.css'; ?>" type="text/css">
         <style>
             body{
                 padding-top: 50px;
@@ -48,14 +50,14 @@ and open the template in the editor.
             echo '<form action="' . site_url('/User/index/create') . '">';
             echo '<input type="submit" class="btn btn-primary btn" value="Create New User" /></br></br> </form>';
             echo '<table cellPadding="50" border="3" allignment="center" >';
-            echo '<tr><th>UID</th><th>User Name</th><th>User Email</th><th>Role (1-4)</th><th>Delete User</th></tr>';
+            echo '<tr><th>UID</th><th>User Name</th><th>User Email</th><th>Role (1-4)</th><th>Delete User</th><th>Reset Logged In Time</th></tr>';
             foreach ($allUsers as $user) {
                 echo '<tr><td> ' . $user->getUserID() . '</td> '
                 . '<td><a href="' . site_url('/User/index/modify/' . $user->getUserID()) . '">' . $user->getName() . '</a></td>'
                 . '<td> ' . $user->getEmailAddress() . '</td> '
                 . '<td> ';
                 if ($user->isStudent()) {
-                    echo 'Student';
+                    echo 'Student,';
                 }
                 if ($user->isAdmin()) {
                     echo 'Admin, ';
@@ -67,7 +69,8 @@ and open the template in the editor.
                     echo 'Advisor, ';
                 }
                 echo ' </td> '
-                . '<td><a href="' . site_url('/User/index/remove/' . $user->getUserID()) . '"> Delete</a></td>';
+                . '<td><a href="' . site_url('/User/index/remove/' . $user->getUserID()) . '"> Delete</a></td>'
+                . '<td><a href="' . site_url('/User/index/resetTimestamp/' . $user->getUserID()) . '"> Reset</a></td>';
                 echo '</tr>';
             }
             echo '</table>';

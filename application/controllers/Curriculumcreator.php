@@ -31,11 +31,11 @@ class Curriculumcreator extends CI_Controller {
 		//creating easy to use array for table
 		foreach ($curriculums as $curr) 
 		{
-			$arr = [ 
+			$arr = array( 
 				'name' => $curr->getName(),
 				'id'   => $curr->getCurriculumID(),
 				'date' => $curr->getDateCreated(),
-			];
+			);
 			
 			array_push($data, $arr);
 		}
