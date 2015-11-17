@@ -408,11 +408,11 @@ class Curriculumcreator extends CI_Controller {
 			$_SESSION['reqs'] = $tempReqs;
 		}
 				
-		$arr = [
+		$arr = array(
 			'slot'    => $courseSlot->toSerializedString(),
 			'prereqs' => array(),
 			'coreqs'  => array() 
-		];
+		);
 		
 		//add any new prereqs
 		if (!empty($prerequisites))
@@ -542,12 +542,12 @@ class Curriculumcreator extends CI_Controller {
 
 		foreach ($courseSlots as $slot)
 		{
-			$arr = [ 
+			$arr = array(
 				'name'     => $slot->getName(),
 				'id'       => $slot->getCurriculumCourseSlotID(),
 				'index'    => $slot->getCurriculumIndex(),
 				'selected' => FALSE
-			];
+			);
 			
 			if (!$prereqsEdited)
 			{	//normal prereq functionality
@@ -579,12 +579,12 @@ class Curriculumcreator extends CI_Controller {
 		
 		foreach ($courseSlots as $slot)
 		{
-			$arr = [ 
+			$arr = array( 
 				'name'     => $slot->getName(),
 				'id'       => $slot->getCurriculumCourseSlotID(),
 				'index'    => $slot->getCurriculumIndex(),
 				'selected' => FALSE
-			];
+			);
 			
 			if (!$prereqsEdited)
 			{	//normal coreq functionality
@@ -617,13 +617,13 @@ class Curriculumcreator extends CI_Controller {
 		
 		foreach ($availableCourses as $course)
 		{
-			$arr = [
+			$arr = array(
 				'name'    => $course->getCourseName(),
 				'id'      => $course->getCourseID(),
 				'prereqs' => $course->getPrerequisiteCourses(),
 				'number'  => $course->getCourseNumber(),
 				'selected'=> FALSE
-			];
+			);
 			
 			foreach ($validCourse as $valid)
 				if (strcmp($valid, $course->getCourseID()) == 0)
@@ -659,13 +659,13 @@ class Curriculumcreator extends CI_Controller {
 		//create easy to use array for table
 		foreach ($courseSlots as $slot)
 		{
-			$arr = [ 
+			$arr = array(
 				'name'    => $slot->getName(),
 				'id'      => $slot->getCurriculumCourseSlotID(),
 				'index'   => $slot->getCurriculumIndex(),
 				'quarter' => $slot->getRecommendedQuarter(),
 				'year'    => $slot->getRecommendedYear()
-			];
+			);
 			
 			array_push($data['course'], $arr);
 		}
