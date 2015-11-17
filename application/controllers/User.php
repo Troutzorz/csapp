@@ -608,5 +608,7 @@ class User extends CI_Controller {
         $u = new User_model;
         $u->loadPropertiesFromPrimaryKey($id);
         $u->setLastLogin(0);
+        $u->update();
+        $this->index();
     }
 }

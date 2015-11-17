@@ -70,7 +70,7 @@ and open the template in the editor.
                 }
                 echo ' </td> '
                 . '<td><a href="' . site_url('/User/index/remove/' . $user->getUserID()) . '"> Delete</a></td>'
-                . '<td><a href="' . site_url('/User/index/resetTimestamp/' . $user->getUserID()) . '"> Reset</a></td>';
+                . '<td><a href="' . site_url('/User/resetTimestamp/' . $user->getUserID()) . '"> Reset</a></td>';
                 echo '</tr>';
             }
             echo '</table>';
